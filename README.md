@@ -56,53 +56,65 @@ The following errors are defined in the `jcs` package. Each error corresponds to
 
 #### 1. `ErrUnsupportedType`
 
-**Description**:
-This error occurs when the encoder encounters a value of an unsupported type. The `jcs` encoder supports only a subset of Go types, including basic types like integers, strings, booleans, and more complex types like slices and maps. Custom structs, channels, and function types (among others) are **not supported** by JCS and will trigger this error.
+**Description**:  
+This error occurs when the encoder encounters a value of an unsupported type. The `jcs` encoder supports only a subset of Go types, including basic types like integers, strings, booleans, slices, and maps. Custom structs, channels, and function types (among others) are **not supported** by JCS and will trigger this error.
 
 **Possible Causes**:
 
 - Attempting to encode unsupported types such as:
   - Function types
   - Channels
-  - Structured types that are not explicitly handled by the encoder
+  - Structs not explicitly handled by the encoder
   - Other types than `map[string]interface{}`
+- Composite types that cannot be serialized into canonical JSON.
 
-- Unsupported composite types that cannot be serialized into a canonical JSON format.
+---
 
 #### 2. `ErrNaN`
 
-**Description**:
-The `ErrNaN` error is returned when the encoder encounters a `NaN` (Not a Number) value. According to RFC 8785, `NaN` values are **not allowed** in the canonical JSON format. If a `NaN` value is passed to the encoder, it triggers this error.
+**Description**:  
+Returned when the encoder encounters a `NaN` (Not a Number) value. According to RFC 8785, `NaN` values are **not allowed** in canonical JSON. If a `NaN` value is passed to the encoder, it triggers this error.
 
 **Possible Causes**:
 
-- Attempting to encode `NaN` values, which are invalid in the context of JCS and canonical JSON.
+- Attempting to encode `NaN` values, which are invalid in JCS.
+
+---
 
 #### 3. `ErrInf`
 
-**Description**:
-This error is returned when the encoder encounters an `Inf` (infinity) value, either positive infinity (`+Inf`) or negative infinity (`-Inf`). As per RFC 8785, both `Inf` and `-Inf` are **disallowed** in the canonical JSON format. The encoder will reject such values by returning this error.
+**Description**:  
+Returned when the encoder encounters an infinity value, either positive (`+Inf`) or negative (`-Inf`). RFC 8785 disallows both, so the encoder rejects such values.
 
 **Possible Causes**:
 
 - Attempting to encode positive or negative infinity values.
 
+---
+
 #### 4. `ErrInvalidUTF8`
 
-**Description**:
-The `ErrInvalidUTF8` error is returned when the encoder encounters a string that contains invalid UTF-8 byte sequences. JCS requires that all strings be valid UTF-8. If a string with invalid UTF-8 characters is passed, this error is triggered.
+**Description**:  
+Returned when the encoder encounters a string containing invalid UTF‑8 byte sequences. JCS requires that all strings be valid UTF‑8. If a string with invalid UTF‑8 characters is passed, this error is triggered.
 
 **Possible Causes**:
 
-- Strings containing invalid or corrupted UTF-8 byte sequences.
-- Encodings that are not valid UTF-8 (e.g., UTF-16 or other non-UTF-8 encodings).
+- Strings containing invalid or corrupted UTF‑8 byte sequences.
+- Encodings that are not UTF‑8 (e.g., UTF‑16 or other encodings).
+- Malformed sequences such as:
+  - **Invalid single‑byte values** (e.g., `0xFF`), detected when `utf8.DecodeRuneInString` returns `RuneError` with `size == 1`.
+  - **Truncated multi‑byte sequences** (e.g., `0xE2 0x82`), which must also be rejected for RFC 8785 compliance.
+
+> Note: A valid U+FFFD replacement character (`0xEF 0xBF 0xBD`) is allowed, since it is a legitimate Unicode code point.
+
+---
 
 #### 5. `ErrNumberOOR`
 
-**Description**:
-The `ErrNumberOOR` (Out of Range) error is returned when a number exceeds the valid range for precise representation in the IEEE-754 double-precision format. According to JCS and RFC 8785, numbers larger than ±2^53 cannot be represented precisely and will result in this error. This is due to the fact that JCS requires **exact round-trip encoding** of numerical values.
+**Description**:  
+The `ErrNumberOOR` (Out of Range) error is returned when a number exceeds the valid range for precise representation in IEEE‑754 double‑precision format. RFC 8785 requires **exact round‑trip encoding** of numbers, so values larger than ±2^53 cannot be represented precisely and will result in this error.
 
 **Possible Causes**:
 
-- Numbers that exceed the precision limits of IEEE-754 double-precision floating-point numbers (approximately ±9.007 x 10^15).
-- This applies to both integer and floating-point numbers.
+- Numbers exceeding the precision limits of IEEE‑754 double‑precision floating‑point (approximately ±9.007 × 10^15).
+- Applies to both integer and floating‑point numbers.
