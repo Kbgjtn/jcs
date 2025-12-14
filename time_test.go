@@ -9,29 +9,27 @@ import (
 
 func TestAppendTime(t *testing.T) {
 	tests := []struct {
-		name   string
-		in     time.Time
-		exp    string
-		expErr error
+		name string
+		in   time.Time
+		want string
 	}{
 		{
-			name:   "2019-01-28T07:45:10Z",
-			in:     time.Date(2019, 1, 28, 7, 45, 10, 0, time.UTC),
-			exp:    "2019-01-28T07:45:10Z",
-			expErr: nil,
+			name: "2019-01-28T07:45:10Z",
+			in:   time.Date(2019, 1, 28, 7, 45, 10, 0, time.UTC),
+			want: `"2019-01-28T07:45:10Z"`,
 		},
 		{
-			name:   "2019-01-28T07:45:10.123456Z",
-			in:     time.Date(2019, 1, 28, 7, 45, 10, 123456000, time.UTC),
-			exp:    "2019-01-28T07:45:10Z",
-			expErr: nil,
+			name: "2019-01-28T07:45:10.123456Z",
+			in:   time.Date(2019, 1, 28, 7, 45, 10, 123456000, time.UTC),
+			want: `"2019-01-28T07:45:10.123456Z"`,
 		},
 	}
 
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
-			buf := []byte{}
-			buf = appendTime(buf, tc.in)
+			got := []byte{}
+			got = appendTime(got, tc.in)
+			Equals(t, tc.want, string(got))
 		})
 	}
 }

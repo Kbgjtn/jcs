@@ -44,5 +44,7 @@ func appendTime(dst []byte, t time.Time) []byte {
 		dst = append(dst[:len(dst)-6], 'Z')
 	}
 
+	dst = append(dst, '"')
+
 	return dst
 }
