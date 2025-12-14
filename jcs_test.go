@@ -110,7 +110,7 @@ func TestAppend(t *testing.T) {
 		{name: "Non-ASCII character", value: map[string]any{"s": "é"}, want: `{"s":"é"}`},
 		{name: "Number normalization integer", value: map[string]any{"n": 1.0}, want: `{"n":1}`},
 		{name: "Number normalization exponent", value: map[string]any{"n": 1e+00}, want: `{"n":1}`},
-		{name: "Negative zero", value: map[string]any{"n": -0.0}, want: `{"n":0}`},
+		{name: "Negative zero", value: map[string]any{"n": -0.0}, want: `{"n":0}`}, //nolint
 		{name: "Large exponent", value: map[string]any{"n": 1e-6}, want: `{"n":0.000001}`},
 		{name: "String subtype time", value: map[string]any{"time": "2019-01-28T07:45:10Z"}, want: `{"time":"2019-01-28T07:45:10Z"}`},
 		{name: "Key collision lookalike", value: map[string]any{"a": 1, "u0061": 2}, want: `{"a":1,"u0061":2}`},
