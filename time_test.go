@@ -27,8 +27,7 @@ func TestAppendTime(t *testing.T) {
 
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
-			got := []byte{}
-			got = appendTime(got, tc.in)
+			got := appendTime([]byte{}, tc.in)
 			Equals(t, tc.want, string(got))
 		})
 	}

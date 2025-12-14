@@ -37,9 +37,9 @@ func TestAppendString(t *testing.T) {
 
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
-			out, err := appendString([]byte{}, tc.value)
+			got, err := appendString([]byte{}, tc.value)
 			Equals(t, tc.wantErr, err)
-			Equals(t, tc.want, string(out))
+			Equals(t, tc.want, string(got))
 		})
 	}
 }
