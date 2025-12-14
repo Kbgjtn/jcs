@@ -102,7 +102,7 @@ func main() {
 		if err != nil {
 			fatal(*quiet, "Failed to open input file", err, 1)
 		}
-		defer f.Close()
+		defer f.Close() //nolint
 		reader = f
 
 		if fi, err := f.Stat(); err == nil {
