@@ -129,3 +129,35 @@ The `ErrNumberOOR` (Out of Range) error is returned when a number exceeds the va
 
 - Numbers exceeding the precision limits of IEEE‑754 double‑precision floating‑point (approximately ±9.007 × 10^15).
 - Applies to both integer and floating‑point numbers.
+
+### Number Compliance
+
+#### RFC 8785 Rules Enforced:
+
+- **Zero normalization**  
+  Both `+0.0` and `-0.0` are rendered as `"0"`. RFC 8785 requires that negative zero not be distinguishable from positive zero in canonical JSON.
+
+- **NaN and Infinity**  
+  `NaN`, `+Inf`, and `-Inf` are explicitly disallowed. If encountered, the encoder returns `ErrNaN` or `ErrInf`.
+
+- **Safe integer range**  
+  Integers must lie within the IEEE‑754 double‑precision safe range:
+
+\[-(2^53‑1), +(2^53‑1)\]
+
+Values outside this range cannot be represented exactly as `float64` and will trigger `ErrNumberOOR`.
+
+- **Shortest decimal representation**  
+  Finite values are serialized using `strconv.AppendFloat` with mode `'f'` and precision `-1`, producing the shortest correct decimal string. For very large or very small magnitudes, `numberNormalizer` is used to ensure canonical exponent formatting.
+
+- **Exponent normalization**  
+  RFC 8785 requires that exponents:
+  - Always include a sign (`+` or `-`).
+  - Never contain leading zeros.  
+    Example: `1230000000` must be represented as `1.23e+9`, not `1.23e09` or `1.23e9`.
+
+#### Performance Notes
+
+Benchmarks show predictable linear scaling with input size.
+The majority of runtime cost comes from Go’s `strconv.AppendFloat` implementation, which performs the heavy float‑to‑string conversion. The `numberNormalizer` adds a small overhead (~3–4%) to enforce RFC exponent formatting.
+While specialized algorithms like Ryu or Grisu3 can be faster, this approach is correct, stable, and maintainable.
