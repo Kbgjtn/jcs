@@ -21,5 +21,6 @@ jobs:
         run: go vet ./...
       - name: Lint
         uses: golangci/golangci-lint-action@v4
+        run: golangci-lint run --out-format=colored-line-number
         with:
-          version: latest
+          version: "2.7.1"
