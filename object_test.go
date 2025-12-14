@@ -66,31 +66,6 @@ func TestAppendObject(t *testing.T) {
 	}
 }
 
-// randomMap generates a map[string]any with n entries.
-// Keys are random strings, values are random types (string, int, bool, float64).
-func randomMap(n int, rng *rand.Rand) map[string]any {
-	m := make(map[string]any, n)
-
-	for i := 0; i < n; i++ {
-		// Generate a random key
-		key := "key" + strconv.Itoa(rng.Intn(1_000_000))
-
-		// Randomize value type
-		switch rng.Intn(4) {
-		case 0:
-			m[key] = rng.Intn(1000) // int
-		case 1:
-			m[key] = rng.Float64() * 1000 // float64
-		case 2:
-			m[key] = "val" + strconv.Itoa(rng.Intn(1_000)) // string
-		case 3:
-			m[key] = rng.Intn(2) == 0 // bool
-		}
-	}
-
-	return m
-}
-
 func BenchmarkAppendObject(b *testing.B) {
 	b.ReportAllocs()
 
