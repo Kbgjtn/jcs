@@ -23,6 +23,31 @@ type kv struct {
 	// This accounts for surrogate pairs and ensures proper indexing.
 	len uint32
 }
+
+type kvSlice struct {
+	keys     []kv
+	utf16buf []uint16
+}
+
+func (kvs kvSlice) Len() int {
+	return len(kvs.keys)
+}
+
+func (kvs kvSlice) Less(i, j int) bool {
+	aStart, aLen := int(kvs.keys[i].start), kvs.keys[i].len
+	bStart, bLen := int(kvs.keys[j].start), kvs.keys[j].len
+
+	n := int(min(aLen, bLen))
+	for x := 0; x < n; x++ {
+		if kvs.utf16buf[aStart+x] != kvs.utf16buf[bStart+x] {
+			return kvs.utf16buf[aStart+x] < kvs.utf16buf[bStart+x]
+		}
+	}
+	return aLen < bLen
+}
+
+func (s kvSlice) Swap(i, j int) {
+	s.keys[i], s.keys[j] = s.keys[j], s.keys[i]
 }
 
 // appendUTF16 converts a UTF-8 encoded string into UTF-16 code units.
