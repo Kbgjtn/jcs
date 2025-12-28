@@ -106,3 +106,15 @@ func appendUTF16(buf []uint16, s string) ([]uint16, int, error) {
 
 	return buf, len(buf) - start, nil
 }
+
+func utf16Len(s string) int {
+	n := 0
+	for _, r := range s {
+		if r <= 0xFFFF {
+			n++
+		} else {
+			n += 2
+		}
+	}
+	return n
+}
