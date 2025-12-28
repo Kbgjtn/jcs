@@ -49,7 +49,7 @@ func BenchmarkAppendString(b *testing.B) {
 	rng := rand.New(rand.NewSource(time.Now().UnixNano()))
 
 	for _, size := range benchSizes() {
-		buf := make([]byte, 0, size*3)
+		buf := make([]byte, 0, size*6+2)
 		sample := randomString(size, rng)
 
 		b.Run(

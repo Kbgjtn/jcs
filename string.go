@@ -1,7 +1,6 @@
 package jcs
 
 import (
-	"slices"
 	"unicode/utf8"
 )
 
@@ -37,10 +36,6 @@ var hex = []byte("0123456789abcdef")
 // according to RFC 8785.
 func appendString(dst []byte, s string) ([]byte, error) {
 	dstLen := len(dst)
-
-	// Worst case: every byte escaped + quotes
-	dst = slices.Grow(dst, len(s)+2)
-
 	dst = append(dst, '"')
 
 	for i := 0; i < len(s); {
@@ -59,7 +54,7 @@ func appendString(dst []byte, s string) ([]byte, error) {
 				}
 				break
 			}
-			dst = append(dst, s[start:i]...)
+			dst = appendBytes(dst, s, start, i)
 			continue
 		}
 
@@ -112,4 +107,20 @@ func appendString(dst []byte, s string) ([]byte, error) {
 
 	dst = append(dst, '"')
 	return dst, nil
+}
+
+func appendBytes(dst []byte, s string, start, end int) []byte {
+	n := end - start
+	l := len(dst)
+	if cap(dst)-l < n {
+		newCap := (cap(dst)*2 + n)
+		nd := make([]byte, l, newCap)
+		copy(nd, dst)
+		dst = nd
+	}
+	dst = dst[:l+n]
+	for i := 0; i < n; i++ {
+		dst[l+i] = s[start+i]
+	}
+	return dst
 }
