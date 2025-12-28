@@ -70,29 +70,27 @@ func BenchmarkAppendObject(b *testing.B) {
 	b.ReportAllocs()
 
 	if testing.Short() {
-		b.SkipNow()
+		b.Skip()
 	}
 
 	rng := rand.New(rand.NewSource(time.Now().UnixNano()))
+	var sample map[string]any
+	var buf []byte
 
 	for _, size := range benchSizes() {
-		buf := make([]byte, 0, 1024)
-		b.Run(
-			"Size"+strconv.Itoa(size),
+		b.Run("Size"+strconv.Itoa(size), func(b *testing.B) {
+			buf = make([]byte, 0, size)
+			sample = randomMap(size, rng)
 
-			func(b *testing.B) {
-				dst := buf[:0]
-				sample := randomMap(size, rng)
-
-				b.ResetTimer()
-				for b.Loop() {
-					_, err := appendObject(dst, sample)
-					if err != nil {
-						b.Fatal(err)
-						return
-					}
+			b.ResetTimer()
+			for b.Loop() {
+				_, err := appendObject(buf, sample)
+				if err != nil {
+					b.Fatal(err)
+					return
 				}
-			},
+			}
+		},
 		)
 	}
 }
