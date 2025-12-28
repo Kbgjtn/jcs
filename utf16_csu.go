@@ -17,11 +17,12 @@ type kv struct {
 
 	// start is the starting position of the key within some larger string or dataset.
 	// It helps to know where the key begins when working with a collection of UTF-16 data.
-	start int
+	start uint32
 
 	// len is the length of the key in terms of UTF-16 code units (i.e., number of 16-bit units).
 	// This accounts for surrogate pairs and ensures proper indexing.
-	len int
+	len uint32
+}
 }
 
 // appendUTF16 converts a UTF-8 encoded string into UTF-16 code units.
