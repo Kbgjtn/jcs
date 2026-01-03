@@ -2,6 +2,7 @@ package jcs
 
 import (
 	"bytes"
+	"encoding/json"
 	"math/rand"
 	"strconv"
 	"testing"
