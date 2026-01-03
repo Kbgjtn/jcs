@@ -17,11 +17,37 @@ type kv struct {
 
 	// start is the starting position of the key within some larger string or dataset.
 	// It helps to know where the key begins when working with a collection of UTF-16 data.
-	start int
+	start uint32
 
 	// len is the length of the key in terms of UTF-16 code units (i.e., number of 16-bit units).
 	// This accounts for surrogate pairs and ensures proper indexing.
-	len int
+	len uint32
+}
+
+type kvSlice struct {
+	keys     []kv
+	utf16buf []uint16
+}
+
+func (kvs kvSlice) Len() int {
+	return len(kvs.keys)
+}
+
+func (kvs kvSlice) Less(i, j int) bool {
+	aStart, aLen := int(kvs.keys[i].start), kvs.keys[i].len
+	bStart, bLen := int(kvs.keys[j].start), kvs.keys[j].len
+
+	n := int(min(aLen, bLen))
+	for x := 0; x < n; x++ {
+		if kvs.utf16buf[aStart+x] != kvs.utf16buf[bStart+x] {
+			return kvs.utf16buf[aStart+x] < kvs.utf16buf[bStart+x]
+		}
+	}
+	return aLen < bLen
+}
+
+func (s kvSlice) Swap(i, j int) {
+	s.keys[i], s.keys[j] = s.keys[j], s.keys[i]
 }
 
 // appendUTF16 converts a UTF-8 encoded string into UTF-16 code units.
@@ -79,4 +105,16 @@ func appendUTF16(buf []uint16, s string) ([]uint16, int, error) {
 	}
 
 	return buf, len(buf) - start, nil
+}
+
+func utf16Len(s string) int {
+	n := 0
+	for _, r := range s {
+		if r <= 0xFFFF {
+			n++
+		} else {
+			n += 2
+		}
+	}
+	return n
 }
