@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"reflect"
 	"runtime"
+	"slices"
 	"strconv"
 	"testing"
 )
@@ -16,6 +17,11 @@ var (
 	smallSizesBench = []int{100, 1_000, 10_000, 15_000, 25_000, 50_000, 100_000}
 	stringSize      = []int{8, 64, 128, 512, 1 << 10, 2 << 10, 3 << 10, 4 << 10, 6 << 10}
 	sliceSize       = []int{1, 4, 8, 16, 32, 64, 128, 512, 1024, 2048, 4096}
+)
+
+const (
+	AvgBytesPerNumber          = 16
+	AvgWorstCaseBytesPerString = 4
 )
 
 func benchSizes() []int {
@@ -45,6 +51,20 @@ func randomString(n int, rng *rand.Rand) string {
 	}
 
 	return string(runes)
+}
+
+// randomASCIIStrin generate random ASCII character from 0x20 to 0x7E
+// with the given size
+func randomASCIIString(n int, rng *rand.Rand) string {
+	if n <= 0 {
+		return ""
+	}
+
+	b := make([]byte, n)
+	for i := range b {
+		b[i] = byte(32 + rng.Intn(95))
+	}
+	return string(b)
 }
 
 // randomMap generates a map[string]any with n entries.
