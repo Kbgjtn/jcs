@@ -42,6 +42,27 @@ func TestTime(t *testing.T) {
 	}
 }
 
+func FuzzAppendTime(f *testing.F) {
+	tests := []int64{
+		time.Date(2019, 1, 28, 7, 45, 10, 0, time.UTC).UnixNano(),
+		time.Date(2019, 1, 28, 7, 45, 10, 123456000, time.UTC).UnixNano(),
+	}
+
+	for _, tc := range tests {
+		f.Add(tc)
+	}
+
+	f.Fuzz(func(t *testing.T, nanos int64) {
+		s := time.Unix(0, nanos)
+		got := appendTime(nil, s)
+		want, _ := json.Marshal(s)
+		if !bytes.Equal(want, got) {
+			t.Fatalf("input=%q\nwant=%q (len=%d)\ngot =%q (len=%d)\nwant hex=%x\ngot hex=%x", s, want, len(want), got, len(got), want, got)
+			return
+		}
+	})
+}
+
 func BenchmarkAppendTime(b *testing.B) {
 	b.ReportAllocs()
 
