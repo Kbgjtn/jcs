@@ -86,6 +86,8 @@ func randomMap(n int, rng *rand.Rand) map[string]any {
 			m[key] = "val" + strconv.Itoa(rng.Intn(1_000)) // string
 		case 3:
 			m[key] = rng.Intn(2) == 0 // bool
+		case 5:
+			m[key] = slices.Repeat([]any{rng.Intn(1000), rng.Intn(1000), rng.Intn(1000)}, 3)
 		}
 	}
 
