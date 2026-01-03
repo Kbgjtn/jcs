@@ -1,13 +1,14 @@
 package jcs
 
 import (
+	"bytes"
 	"math/rand"
 	"strconv"
 	"testing"
 	"time"
 )
 
-func TestAppendTime(t *testing.T) {
+func TestTime(t *testing.T) {
 	tests := []struct {
 		name string
 		in   time.Time
@@ -26,9 +27,17 @@ func TestAppendTime(t *testing.T) {
 	}
 
 	for _, tc := range tests {
-		t.Run(tc.name, func(t *testing.T) {
+		t.Run("append_"+tc.name, func(t *testing.T) {
 			got := appendTime([]byte{}, tc.in)
 			Equals(t, tc.want, string(got))
+		})
+
+		t.Run("write_"+tc.name, func(t *testing.T) {
+			w := bytes.NewBuffer(nil)
+			e := NewEncoder(w)
+			err := e.writeTime(tc.in)
+			Equals(t, nil, err)
+			Equals(t, tc.want, w.String())
 		})
 	}
 }
@@ -42,19 +51,16 @@ func BenchmarkAppendTime(b *testing.B) {
 	for _, size := range benchSizes() {
 		buf := make([]byte, 0, size*64)
 
-		b.Run(
-			"Size="+strconv.Itoa(size),
-			func(b *testing.B) {
-				dst := buf[:0]
+		b.Run("Size="+strconv.Itoa(size), func(b *testing.B) {
+			b.ResetTimer()
+			for b.Loop() {
+				buf = buf[:0]
+				randomOffset := time.Duration(rng.Int63n(int64(time.Hour*24*365*2))) - time.Duration(time.Hour*24*365)
+				randomTime := base.Add(randomOffset)
 
-				b.ResetTimer()
-				for b.Loop() {
-					randomOffset := time.Duration(rng.Int63n(int64(time.Hour*24*365*2))) - time.Duration(time.Hour*24*365)
-					randomTime := base.Add(randomOffset)
-
-					_ = appendTime(dst, randomTime)
-				}
-			},
+				buf = appendTime(buf, randomTime)
+			}
+		},
 		)
 	}
 }
