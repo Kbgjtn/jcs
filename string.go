@@ -171,7 +171,7 @@ var asciiN [128]byte = [...]byte{6, 6, 6, 6, 6, 6, 6, 6, 2, 2, 2, 6, 2, 2, 6, 6,
 // The resulting output is guaranteed to be a valid, canonical JSON string
 // according to RFC 8785.
 func appendString(dst []byte, s string) ([]byte, error) {
-	dst = append(dst, Quote[0])
+	dst = append(dst, '"')
 	i := 0
 	n := len(s)
 
@@ -227,6 +227,6 @@ func appendString(dst []byte, s string) ([]byte, error) {
 			i += size
 		}
 	}
-	dst = append(dst, Quote[0])
+	dst = append(dst, '"')
 	return dst, nil
 }
