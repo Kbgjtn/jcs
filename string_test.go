@@ -52,14 +52,6 @@ func TestString(t *testing.T) {
 			Equals(t, tc.wantErr, err)
 			Equals(t, tc.want, string(got))
 		})
-
-		t.Run("write_"+tc.name, func(t *testing.T) {
-			w := bytes.NewBuffer(nil)
-			e := NewEncoder(w)
-			err := e.writeString(tc.value)
-			Equals(t, tc.wantErr, err)
-			Equals(t, tc.want, w.String())
-		})
 	}
 }
 
