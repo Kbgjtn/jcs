@@ -1,5 +1,6 @@
 package jcs
 
+//nolint:unused
 type noCopy struct{}
 
 func (*noCopy) Lock()   {}
