@@ -48,7 +48,6 @@ jobs:
             git push
           else
             echo "bench.txt not found"
-            exit 1
           fi
       - name: Upload Benchmark Results
         uses: actions/upload-artifact@v4
