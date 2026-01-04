@@ -1,86 +1,89 @@
+GOMAXPROCS=1 go test -gcflags '' -benchmem -cpuprofile cpu.out -memprofile mem.out -bench=. -cpu=1 .
 goos: linux
 goarch: amd64
 pkg: github.com/Kbgjtn/jcs
 cpu: AMD EPYC 7763 64-Core Processor                
-BenchmarkAppendSlice/Size_1-4                	73745396	        15.63 ns/op	4095.13 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendSlice/Size_4-4                	10224344	       117.6 ns/op	2176.58 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendSlice/Size_8-4                	 4617655	       260.4 ns/op	1966.52 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendSlice/Size_16-4               	 2160792	       555.9 ns/op	1842.20 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendSlice/Size_32-4               	 1000000	      1048 ns/op	1954.27 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendSlice/Size_64-4               	  570270	      2037 ns/op	2011.19 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendSlice/Size_128-4              	  292747	      4117 ns/op	1989.69 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendSlice/Size_512-4              	   72730	     16732 ns/op	1958.38 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendSlice/Size_1024-4             	   36886	     32494 ns/op	2016.84 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendSlice/Size_2048-4             	   17907	     66261 ns/op	1978.13 MB/s	       1 B/op	       0 allocs/op
-BenchmarkAppendSlice/Size_4096-4             	    9189	    130960 ns/op	2001.70 MB/s	      13 B/op	       0 allocs/op
-BenchmarkAppendNumber_Throughput/Size_100-4  	  166941	      7177 ns/op	 222.94 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendNumber_Throughput/Size_1000-4 	   16430	     73068 ns/op	 218.97 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendNumber_Throughput/Size_10000-4         	    1639	    730823 ns/op	 218.93 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendNumber_Throughput/Size_100000-4        	     163	   7351504 ns/op	 217.64 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendNumber_Throughput/Size_1000000-4       	      15	  73625155 ns/op	 217.32 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendNumber_Throughput/Size_5000000-4       	       3	 365075797 ns/op	 219.13 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendNumber_Throughput/Size_10000000-4      	       2	 731886836 ns/op	 218.61 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendNumber/Size_100-4                      	16239978	        73.84 ns/op	 216.70 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendNumber/Size_1000-4                     	16279334	        73.60 ns/op	 217.41 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendNumber/Size_10000-4                    	16321567	        73.83 ns/op	 216.71 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendNumber/Size_100000-4                   	16265695	        73.64 ns/op	 217.29 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendNumber/Size_1000000-4                  	16273761	        73.71 ns/op	 217.07 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendNumber/Size_5000000-4                  	16255504	        73.85 ns/op	 216.65 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendNumber/Size_10000000-4                 	16149543	        74.32 ns/op	 215.30 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendObject/Size100-4                       	   40902	     29202 ns/op	    7984 B/op	       4 allocs/op
-BenchmarkAppendObject/Size1000-4                      	    3048	    386402 ns/op	   84016 B/op	       4 allocs/op
-BenchmarkAppendObject/Size10000-4                     	     249	   4796185 ns/op	  770096 B/op	       4 allocs/op
-BenchmarkAppendObject/Size100000-4                    	      20	  56303171 ns/op	 7266352 B/op	       4 allocs/op
-BenchmarkAppendObject/Size1000000-4                   	       2	 571848034 ns/op	48226352 B/op	       4 allocs/op
-BenchmarkAppendObject/Size5000000-4                   	       1	1006537670 ns/op	75743280 B/op	       4 allocs/op
-BenchmarkAppendObject/Size10000000-4                  	       1	1116976442 ns/op	76267568 B/op	       4 allocs/op
-BenchmarkAppendString_Unicode_Throughput/Size_8-4     	   18655	     64203 ns/op	 510.42 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendString_Unicode_Throughput/Size_64-4    	    2686	    443153 ns/op	 591.55 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendString_Unicode_Throughput/Size_128-4   	    1284	    926759 ns/op	 565.72 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendString_Unicode_Throughput/Size_512-4   	     312	   3829022 ns/op	 547.70 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendString_Unicode_Throughput/Size_1024-4  	     148	   8067870 ns/op	 519.88 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendString_Unicode_Throughput/Size_2048-4  	      70	  15824756 ns/op	 530.09 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendString_Unicode_Throughput/Size_3072-4  	      48	  24572432 ns/op	 512.07 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendString_Unicode_Throughput/Size_4096-4  	      33	  34174661 ns/op	 490.93 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendString_Unicode_Throughput/Size_6144-4  	      20	  62511547 ns/op	 402.58 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendString_Unicode/Size_8-4                	19178908	        62.42 ns/op	 128.16 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendString_Unicode/Size_64-4               	 2773214	       432.8 ns/op	 147.89 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendString_Unicode/Size_128-4              	 1339316	       900.4 ns/op	 142.16 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendString_Unicode/Size_512-4              	  323725	      3696 ns/op	 138.51 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendString_Unicode/Size_1024-4             	  156525	      7686 ns/op	 133.23 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendString_Unicode/Size_2048-4             	   77444	     15503 ns/op	 132.10 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendString_Unicode/Size_3072-4             	   51009	     23676 ns/op	 129.75 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendString_Unicode/Size_4096-4             	   37176	     33095 ns/op	 123.76 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendString_Unicode/Size_6144-4             	   20226	     57886 ns/op	 106.14 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendStringASCII_Throughput/Size_8-4        	   93718	     12893 ns/op	2541.72 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendStringASCII_Throughput/Size_64-4       	   20946	     57370 ns/op	4569.42 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendStringASCII_Throughput/Size_128-4      	    7015	    169728 ns/op	3089.00 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendStringASCII_Throughput/Size_512-4      	    1952	    602764 ns/op	3479.23 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendStringASCII_Throughput/Size_1024-4     	     955	   1247770 ns/op	3361.44 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendStringASCII_Throughput/Size_2048-4     	     460	   2600887 ns/op	3225.29 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendStringASCII_Throughput/Size_3072-4     	     318	   3756719 ns/op	3349.44 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendStringASCII_Throughput/Size_4096-4     	     236	   5028309 ns/op	3336.55 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendStringASCII_Throughput/Size_6144-4     	     145	   8157300 ns/op	3085.07 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendStringASCII/Size_8-4                   	95217033	        12.47 ns/op	 641.63 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendStringASCII/Size_64-4                  	21487389	        55.60 ns/op	1151.11 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendStringASCII/Size_128-4                 	 7567412	       163.8 ns/op	 781.40 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendStringASCII/Size_512-4                 	 2074821	       580.6 ns/op	 881.92 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendStringASCII/Size_1024-4                	  975146	      1212 ns/op	 845.12 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendStringASCII/Size_2048-4                	  473562	      2530 ns/op	 809.34 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendStringASCII/Size_3072-4                	  324338	      3683 ns/op	 834.20 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendStringASCII/Size_4096-4                	  243250	      4908 ns/op	 834.49 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendStringASCII/Size_6144-4                	  149692	      8053 ns/op	 762.91 MB/s	       0 B/op	       0 allocs/op
-BenchmarkAppendTime/Size=100-4                        	14627971	        81.67 ns/op	       0 B/op	       0 allocs/op
-BenchmarkAppendTime/Size=1000-4                       	14730003	        82.48 ns/op	       0 B/op	       0 allocs/op
-BenchmarkAppendTime/Size=10000-4                      	14650350	        81.70 ns/op	       0 B/op	       0 allocs/op
-BenchmarkAppendTime/Size=100000-4                     	14381089	        82.95 ns/op	       0 B/op	       0 allocs/op
-BenchmarkAppendTime/Size=1000000-4                    	14605134	        81.90 ns/op	       0 B/op	       0 allocs/op
-BenchmarkAppendTime/Size=5000000-4                    	14921224	        82.41 ns/op	       0 B/op	       0 allocs/op
-BenchmarkAppendTime/Size=10000000-4                   	14599198	        81.92 ns/op	       0 B/op	       0 allocs/op
-BenchmarkAppendUTF16/Size-100-4                       	 2255731	       531.5 ns/op	       0 B/op	       0 allocs/op
-BenchmarkAppendUTF16/Size-1000-4                      	  221551	      5426 ns/op	       0 B/op	       0 allocs/op
-BenchmarkAppendUTF16/Size-10000-4                     	   13554	     88272 ns/op	       0 B/op	       0 allocs/op
-BenchmarkAppendUTF16/Size-100000-4                    	    1029	   1168888 ns/op	       0 B/op	       0 allocs/op
-BenchmarkAppendUTF16/Size-1000000-4                   	      99	  11795434 ns/op	       0 B/op	       0 allocs/op
-BenchmarkAppendUTF16/Size-5000000-4                   	      20	  59973551 ns/op	       0 B/op	       0 allocs/op
-BenchmarkAppendUTF16/Size-10000000-4                  	       9	 117666268 ns/op	       0 B/op	       0 allocs/op
+BenchmarkAppendSlice/Size_1              	76138866	        15.57 ns/op	4110.88 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendSlice/Size_4              	10043608	       119.5 ns/op	2142.44 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendSlice/Size_8              	 4604439	       260.5 ns/op	1965.46 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendSlice/Size_16             	 2126071	       564.9 ns/op	1812.76 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendSlice/Size_32             	 1000000	      1037 ns/op	1974.52 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendSlice/Size_64             	  591930	      2028 ns/op	2019.27 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendSlice/Size_128            	  290216	      4125 ns/op	1985.82 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendSlice/Size_512            	   71974	     16614 ns/op	1972.32 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendSlice/Size_1024           	   36949	     32502 ns/op	2016.39 MB/s	       1 B/op	       0 allocs/op
+BenchmarkAppendSlice/Size_2048           	   18478	     64940 ns/op	2018.36 MB/s	       1 B/op	       0 allocs/op
+BenchmarkAppendSlice/Size_4096           	    9136	    130450 ns/op	2009.53 MB/s	      14 B/op	       0 allocs/op
+BenchmarkAppendNumber_Throughput/Size_100         	  167425	      7179 ns/op	 222.88 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendNumber_Throughput/Size_1000        	   16272	     73475 ns/op	 217.76 MB/s	       1 B/op	       0 allocs/op
+BenchmarkAppendNumber_Throughput/Size_10000       	    1640	    730548 ns/op	 219.01 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendNumber_Throughput/Size_100000      	     163	   7311008 ns/op	 218.85 MB/s	     100 B/op	       0 allocs/op
+BenchmarkAppendNumber_Throughput/Size_1000000     	      15	  73520873 ns/op	 217.63 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendNumber_Throughput/Size_5000000     	       3	 366215710 ns/op	 218.45 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendNumber_Throughput/Size_10000000    	       2	 732516210 ns/op	 218.43 MB/s	    4096 B/op	       0 allocs/op
+BenchmarkAppendNumber/Size_100                    	16148365	        73.68 ns/op	 217.17 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendNumber/Size_1000                   	16214626	        73.89 ns/op	 216.54 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendNumber/Size_10000                  	16321207	        73.82 ns/op	 216.76 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendNumber/Size_100000                 	16331312	        73.94 ns/op	 216.39 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendNumber/Size_1000000                	16221891	        73.89 ns/op	 216.54 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendNumber/Size_5000000                	16264472	        73.91 ns/op	 216.48 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendNumber/Size_10000000               	16225399	        73.95 ns/op	 216.35 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendObject/Size100                     	   35742	     33682 ns/op	    7984 B/op	       4 allocs/op
+BenchmarkAppendObject/Size1000                    	    2764	    435476 ns/op	   84021 B/op	       4 allocs/op
+BenchmarkAppendObject/Size10000                   	     228	   5247515 ns/op	  778359 B/op	       4 allocs/op
+BenchmarkAppendObject/Size100000                  	      20	  61036584 ns/op	 7266761 B/op	       4 allocs/op
+BenchmarkAppendObject/Size1000000                 	       2	 610571498 ns/op	48205872 B/op	       4 allocs/op
+BenchmarkAppendObject/Size5000000                 	       1	1032496399 ns/op	75788400 B/op	       9 allocs/op
+BenchmarkAppendObject/Size10000000                	       1	1096980033 ns/op	76267568 B/op	       5 allocs/op
+BenchmarkAppendString_Unicode_Throughput/Size_8   	   18484	     64940 ns/op	 504.62 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendString_Unicode_Throughput/Size_64  	    2541	    456705 ns/op	 573.99 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendString_Unicode_Throughput/Size_128 	    1275	    941279 ns/op	 557.00 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendString_Unicode_Throughput/Size_512 	     310	   3882192 ns/op	 540.20 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendString_Unicode_Throughput/Size_1024         	     150	   7938188 ns/op	 528.37 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendString_Unicode_Throughput/Size_2048         	      73	  15831703 ns/op	 529.86 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendString_Unicode_Throughput/Size_3072         	      45	  25814737 ns/op	 487.43 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendString_Unicode_Throughput/Size_4096         	      30	  38284611 ns/op	 438.22 MB/s	     273 B/op	       0 allocs/op
+BenchmarkAppendString_Unicode_Throughput/Size_6144         	      16	  69890537 ns/op	 360.07 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendString_Unicode/Size_8                       	18596430	        64.50 ns/op	 124.04 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendString_Unicode/Size_64                      	 2625290	       459.1 ns/op	 139.39 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendString_Unicode/Size_128                     	 1262788	       945.7 ns/op	 135.36 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendString_Unicode/Size_512                     	  312890	      3819 ns/op	 134.05 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendString_Unicode/Size_1024                    	  149650	      8086 ns/op	 126.64 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendString_Unicode/Size_2048                    	   70243	     16718 ns/op	 122.50 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendString_Unicode/Size_3072                    	   41626	     28480 ns/op	 107.87 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendString_Unicode/Size_4096                    	   30482	     38943 ns/op	 105.18 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendString_Unicode/Size_6144                    	   17720	     66038 ns/op	  93.04 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendStringASCII_Throughput/Size_8               	   90757	     13225 ns/op	2477.86 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendStringASCII_Throughput/Size_64              	   18204	     65908 ns/op	3977.47 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendStringASCII_Throughput/Size_128             	    6996	    171157 ns/op	3063.20 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendStringASCII_Throughput/Size_512             	    1946	    608818 ns/op	3444.63 MB/s	       4 B/op	       0 allocs/op
+BenchmarkAppendStringASCII_Throughput/Size_1024            	     939	   1283774 ns/op	3267.17 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendStringASCII_Throughput/Size_2048            	     454	   2625836 ns/op	3194.64 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendStringASCII_Throughput/Size_3072            	     313	   3819399 ns/op	3294.47 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendStringASCII_Throughput/Size_4096            	     235	   5098084 ns/op	3290.89 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendStringASCII_Throughput/Size_6144            	     147	   8104021 ns/op	3105.35 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendStringASCII/Size_8                          	95873714	        12.75 ns/op	 627.51 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendStringASCII/Size_64                         	18677140	        64.17 ns/op	 997.35 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendStringASCII/Size_128                        	 7177346	       166.6 ns/op	 768.21 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendStringASCII/Size_512                        	 2021788	       593.0 ns/op	 863.33 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendStringASCII/Size_1024                       	  963650	      1233 ns/op	 830.79 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendStringASCII/Size_2048                       	  466582	      2565 ns/op	 798.53 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendStringASCII/Size_3072                       	  321487	      3751 ns/op	 819.07 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendStringASCII/Size_4096                       	  238243	      5005 ns/op	 818.32 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendStringASCII/Size_6144                       	  151220	      7925 ns/op	 775.30 MB/s	       0 B/op	       0 allocs/op
+BenchmarkAppendTime/Size=100                               	19016360	        63.21 ns/op	       0 B/op	       0 allocs/op
+BenchmarkAppendTime/Size=1000                              	19038405	        62.97 ns/op	       0 B/op	       0 allocs/op
+BenchmarkAppendTime/Size=10000                             	18975928	        63.26 ns/op	       0 B/op	       0 allocs/op
+BenchmarkAppendTime/Size=100000                            	19054658	        62.99 ns/op	       0 B/op	       0 allocs/op
+BenchmarkAppendTime/Size=1000000                           	18923116	        63.22 ns/op	       0 B/op	       0 allocs/op
+BenchmarkAppendTime/Size=5000000                           	18842209	        63.28 ns/op	       0 B/op	       0 allocs/op
+BenchmarkAppendTime/Size=10000000                          	18446697	        63.42 ns/op	       0 B/op	       0 allocs/op
+BenchmarkAppendUTF16/Size-100                              	 2291647	       522.0 ns/op	       0 B/op	       0 allocs/op
+BenchmarkAppendUTF16/Size-1000                             	  217557	      5442 ns/op	       0 B/op	       0 allocs/op
+BenchmarkAppendUTF16/Size-10000                            	   12630	     95210 ns/op	       0 B/op	       0 allocs/op
+BenchmarkAppendUTF16/Size-100000                           	    1021	   1175177 ns/op	       0 B/op	       0 allocs/op
+BenchmarkAppendUTF16/Size-1000000                          	      98	  11812250 ns/op	       0 B/op	       0 allocs/op
+BenchmarkAppendUTF16/Size-5000000                          	      19	  59159180 ns/op	       0 B/op	       0 allocs/op
+BenchmarkAppendUTF16/Size-10000000                         	       9	 118254964 ns/op	       0 B/op	       0 allocs/op
+PASS
+ok  	github.com/Kbgjtn/jcs	109.154s

@@ -1,6 +1,10 @@
 package jcs
 
+//nolint:unused
 type noCopy struct{}
 
-func (*noCopy) Lock()   {}
+//nolint:unused
+func (*noCopy) Lock() {}
+
+//nolint:unused
 func (*noCopy) Unlock() {}
