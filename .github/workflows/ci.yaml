@@ -29,12 +29,27 @@ jobs:
     needs: build-test
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-go@v5
         with:
           go-version-file: go.mod
       - name: Run Benchmarks
-        run: go test -bench=. -benchmem ./... > bench.txt
+        run: make benchmark ARGS='-bench=. -cpu=1' > bench.txt
+      - name: Commit benchmark result
+        run: |
+          if [ -f bench.txt ]; then \
+            git config user.name "github-actions"
+            git config user.email "github-actions@github.com"
+            git add bench.txt
+            git commit -m "Update benchmark results [skip ci]" || echo "No changes to commit"
+            git push
+          else
+            echo "bench.txt not found"
+            exit 1
+          fi
       - name: Upload Benchmark Results
+        if: ${{ exists('bench.txt') }}
         uses: actions/upload-artifact@v4
         with:
           name: benchmark-results
